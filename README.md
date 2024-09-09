@@ -18,4 +18,4 @@ Este projeto é um simples pesquisador de jogos de terror. Ele permite que o usu
 
 2. **Acesse pelo GitHub Pages:**
   ```bash
-  git clone https://seu-repositorio.git
+  https://samuelbrag4.github.io/imercaoDev/
