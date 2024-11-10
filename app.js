@@ -1,32 +1,29 @@
 function pesquisar() {
-    // Obtém a seção onde os resultados serão exibidos
+    // Obtém a seção onde os resultados da pesquisa serão exibidos
     let section = document.getElementById("resultados-pesquisa");
-  
+    // Obtém o valor digitado no campo de pesquisa
     let campoPesquisa = document.getElementById("campo-pesquisa").value;
 
-    // Se o campoPesquisa for uma string sem nada
-
+    // Verifica se o campo de pesquisa está vazio
     if (!campoPesquisa) {
-        section.innerHTML = "Nada foi encontrado ou você não escreveu nada no campo de busca"
-        return
-    };
+        section.innerHTML = "Nada foi encontrado ou você não escreveu nada no campo de busca";
+        return;
+    }
 
+    // Converte o valor do campo de pesquisa para minúsculas
     campoPesquisa = campoPesquisa.toLowerCase();
-
-    // Inicializa uma string vazia para armazenar os resultados
     let resultados = "";
     let titulo = "";
     let descricao = "";
-  
-    // Itera sobre cada dado na array 'dados'
+
+    // Percorre todos os dados de jogos
     for (let dado of dados) {
+        titulo = dado.titulo.toLowerCase();
+        descricao = dado.descricao.toLowerCase();
 
-        titulo = dado.titulo.toLowerCase()
-        descricao = dado.descricao.toLowerCase()
-
-        // Se no dado título includes campoPesquisa
+        // Verifica se o título ou a descrição do jogo contém o termo pesquisado
         if (titulo.includes(campoPesquisa) || descricao.includes(campoPesquisa)) {
-            // Constrói o HTML para cada resultado
+            // Adiciona o resultado encontrado à variável resultados
             resultados += `
             <div class="item-resultado">
                 <h2>
@@ -36,9 +33,22 @@ function pesquisar() {
                 <a href=${dado.link} target="_blank">Mais informações</a>
             </div>
             `;
-        };
-    };
+        }
+    }
 
-    // Atribui os resultados HTML à seção
-    section.innerHTML = resultados;
-};
+    // Verifica se nenhum resultado foi encontrado
+    if (resultados === "") {
+        section.innerHTML = "Jogo não encontrado. Talvez ele ainda não tenha sido adicionado ou você digitou algo errado. Tente digitar uma categoria relacionada ao jogo ou entre em contato para que possamos adicionar.";
+    } else {
+        // Exibe os resultados encontrados
+        section.innerHTML = resultados;
+    }
+}
+
+// Adiciona um evento para permitir a pesquisa ao pressionar a tecla Enter
+document.getElementById("campo-pesquisa").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        pesquisar(); // Chama a função pesquisar diretamente
+    }
+});
